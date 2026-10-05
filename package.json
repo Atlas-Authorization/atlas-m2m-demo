@@ -1,0 +1,14 @@
+{
+  "name": "atlas-m2m-demo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Machine-to-machine / API-key mint + verify with @atlasauth/backend, and a protected endpoint that checks a presented key.",
+  "scripts": {
+    "start": "node src/demo.js",
+    "serve": "node src/server.js"
+  },
+  "dependencies": {
+    "@atlasauth/backend": "^0.1.7"
+  }
+}
