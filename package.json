@@ -5,10 +5,17 @@
   "type": "module",
   "description": "Machine-to-machine / API-key mint + verify with @atlasauth/backend, and a protected endpoint that checks a presented key.",
   "scripts": {
-    "start": "node src/demo.js",
-    "serve": "node src/server.js"
+    "start": "tsx src/demo.ts",
+    "serve": "tsx src/server.ts",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@atlasauth/backend": "^0.1.7"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
   }
 }

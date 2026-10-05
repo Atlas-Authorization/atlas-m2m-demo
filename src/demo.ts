@@ -5,8 +5,8 @@
 // is stored server-side, so the `ak_` secret is shown exactly ONCE at mint.
 //
 // Everything here goes through the Backend API (secret-key) client from
-// `@atlasauth/backend`. Run with:  node --env-file=.env src/demo.js
-import { createAtlasClient } from '@atlasauth/backend';
+// `@atlasauth/backend`. Run with:  tsx --env-file=.env src/demo.ts
+import { createAtlasClient, type AtlasClient } from '@atlasauth/backend';
 
 const { ATLAS_SECRET_KEY, ATLAS_API_URL, DEMO_SUBJECT_ID = 'user_demo' } = process.env;
 
@@ -15,9 +15,14 @@ if (!ATLAS_SECRET_KEY) {
   process.exit(1);
 }
 
-const atlas = createAtlasClient({ secretKey: ATLAS_SECRET_KEY, apiUrl: ATLAS_API_URL });
+const atlas: AtlasClient = createAtlasClient({ secretKey: ATLAS_SECRET_KEY, apiUrl: ATLAS_API_URL });
 
-async function main() {
+interface EndpointResult {
+  status: number;
+  body: Record<string, unknown>;
+}
+
+async function main(): Promise<void> {
   // 1) Mint a key for a subject (a user or an organization). `claims` ride with
   //    the key and come back on every successful verify — use them for scopes.
   console.log('Minting an API key for', DEMO_SUBJECT_ID, '…');
@@ -41,7 +46,7 @@ async function main() {
 
   // 3) A protected endpoint, modelled as a plain function: it authenticates the
   //    caller purely from the presented key's verify verdict + claims.
-  async function protectedEndpoint(presentedSecret) {
+  async function protectedEndpoint(presentedSecret: string): Promise<EndpointResult> {
     const v = await atlas.apiKeys.verify(presentedSecret);
     if (!v.valid) return { status: 401, body: { error: 'invalid_api_key' } };
     const scopes = Array.isArray(v.claims?.scopes) ? v.claims.scopes : [];

@@ -6,11 +6,11 @@ organizations and verifies a key a machine presents on a later request.
 
 ## What's wired
 
-- **`src/demo.js`** — a one-shot script: `atlas.apiKeys.create()` mints a key
+- **`src/demo.ts`** — a one-shot script: `atlas.apiKeys.create()` mints a key
   (the `ak_` secret is shown **once**), `atlas.apiKeys.verify(secret)` returns a
   `{ valid, subject_id, claims }` verdict, a `protectedEndpoint()` function gates
   on the key's embedded `scopes` claim, and `atlas.apiKeys.delete()` revokes it.
-- **`src/server.js`** — the same verify logic behind a real HTTP route
+- **`src/server.ts`** — the same verify logic behind a real HTTP route
   (`GET /reports`), authenticating `Authorization: Bearer ak_…`.
 
 Keys are verified **online** (it is a credential check, rate-limited) — unlike

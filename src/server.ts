@@ -3,9 +3,9 @@
 // server verifies it online via @atlasauth/backend and gates on the key's
 // embedded scopes. No extra web framework — Node's built-in http.
 //
-// Run:   node --env-file=.env src/server.js
+// Run:   tsx --env-file=.env src/server.ts
 // Call:  curl -H "Authorization: Bearer ak_live_xxx" http://localhost:3000/reports
-import { createServer } from 'node:http';
+import { createServer, type ServerResponse } from 'node:http';
 import { createAtlasClient } from '@atlasauth/backend';
 
 const { ATLAS_SECRET_KEY, ATLAS_API_URL, PORT = '3000' } = process.env;
@@ -16,7 +16,7 @@ if (!ATLAS_SECRET_KEY) {
 
 const atlas = createAtlasClient({ secretKey: ATLAS_SECRET_KEY, apiUrl: ATLAS_API_URL });
 
-const send = (res, status, body) => {
+const send = (res: ServerResponse, status: number, body: unknown): void => {
   res.writeHead(status, { 'content-type': 'application/json' });
   res.end(JSON.stringify(body));
 };
