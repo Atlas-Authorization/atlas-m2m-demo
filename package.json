@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@atlasauth/backend": "^0.1.7"
+    "@atlasauth/backend": "^0.27.0"
   },
   "devDependencies": {
     "@types/node": "^26.6.4",
